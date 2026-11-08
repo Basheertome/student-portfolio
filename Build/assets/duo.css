@@ -1,0 +1,71 @@
+/* Keep normal layouts intact; only Duo Safari's outer display is widened. */
+html[data-duo-wide] {
+  overflow-x: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* The page canvas and hero backgrounds use the full width. */
+html[data-duo-wide] body {
+  width: var(--duo-viewport-width);
+  overflow-x: hidden;
+}
+
+/* Centre navigation within the safe region, including its narrow mobile layout. */
+html[data-duo-wide] body > .header {
+  position: relative;
+  max-width: calc(100% - var(--duo-inset-left) - var(--duo-inset-right));
+  margin-left: auto;
+  margin-right: auto;
+  transform: translateX(calc((var(--duo-inset-left) - var(--duo-inset-right)) / 2));
+}
+
+html[data-duo-wide] body > .page,
+html[data-duo-wide] .top:not(:has(.top-image)) {
+  position: relative;
+  left: calc((var(--duo-inset-left) - var(--duo-inset-right)) / 2);
+  width: calc(100% - var(--duo-inset-left) - var(--duo-inset-right));
+  box-sizing: border-box;
+}
+
+/* Hero photographs and their black-to-page gradient extend beneath the controls. */
+html[data-duo-wide] .top:has(.top-image) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+html[data-duo-wide] .top-image img {
+  display: block;
+  width: 100%;
+  max-width: none;
+}
+
+html[data-duo-wide] .top:has(.top-image) > h2,
+html[data-duo-wide] .top:has(.top-image) > h3,
+html[data-duo-wide] .top:has(.top-image) > p {
+  position: relative;
+  left: calc((var(--duo-inset-left) - var(--duo-inset-right)) / 2);
+  width: calc(100% - var(--duo-inset-left) - var(--duo-inset-right));
+  box-sizing: border-box;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/* Continue the hero's black surround across the navigation band as well. */
+html[data-duo-wide]:has(.top-image) body > .header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc((100% - var(--duo-viewport-width) - var(--duo-inset-left) + var(--duo-inset-right)) / 2);
+  width: var(--duo-viewport-width);
+  height: 100%;
+  background: #000;
+  z-index: -1;
+}
+
+html[data-duo-wide] body > .previous {
+  left: var(--duo-inset-left);
+}
+
+html[data-duo-wide] body > .next {
+  right: var(--duo-inset-right);
+}
